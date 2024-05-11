@@ -1,0 +1,169 @@
+/* Import Google font */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Sans+MS:wght@400;700&display=swap');
+
+/* CSS for the title */
+.title {
+  text-align: center; /* Center align the text */
+  font-size: 24px; /* Adjust the font size */
+  font-weight: bold; /* Make the text bold */
+  margin-top: 20px; /* Add some top margin for spacing */
+  color: #FFFFFF; /* Set the text color to white */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add a subtle text shadow for contrast */
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Comic Sans MS', sans-serif; /* Changed font to Comic Sans MS */
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: url('mainscreen_bg.jpeg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.wrapper {
+  width: 65vmin;
+  height: 70vmin;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+  background: #2C5234;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+.game-details {
+  color: #F0F5F9;
+  font-weight: 500;
+  font-size: 1.2rem;
+  padding: 20px 27px;
+  display: flex;
+  justify-content: space-between;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.play-board {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  background-color: #97BC62FF;
+  grid-template: repeat(30, 1fr) / repeat(30, 1fr);
+}
+
+.play-board .food {
+  background: #E94B3CFF;
+  border-radius: 50%;
+}
+
+.play-board .head {
+  background: #007CC7;
+}
+
+
+.play-board .gold {
+  background: gold;
+}
+
+.controls {
+  display: none;
+}
+
+.controls i {
+  padding: 25px 0;
+  text-align: center;
+  font-size: 1.3rem;
+  color: #F0F5F9;
+  width: calc(100% / 4);
+  cursor: pointer;
+  border-right: 1px solid #243D32;
+}
+
+@media screen and (max-width: 800px) {
+  .wrapper {
+    width: 90vmin;
+    height: 115vmin;
+  }
+  .game-details {
+    font-size: 1rem;
+    padding: 15px 27px;
+  }
+  .controls {
+    display: flex;
+  }
+  .controls i {
+    padding: 15px 0;
+    font-size: 1rem;
+  }
+}
+
+.game-over-container {
+  display: none;
+  text-align: center;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.game-over-text {
+  font-size: 2em;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+}
+
+.restart-button {
+  padding: 10px 20px;
+  font-size: 1.5em;
+  color: #FFFFFF;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease;
+}
+
+.restart-button:hover {
+  background-color: #367B3F;
+}
+
+.instructions {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  max-width: 800px;
+  font-size: 18px;
+  font-family: 'Comic Sans MS', sans-serif;
+  color: #F0F5F9;
+  background: rgba(0, 0, 0, 0.5);
+  line-height: 1.5;
+  width: 25%;
+}
+
+.instructions ul {
+  padding-left: 10px;
+}
+
+.instructions li {
+  margin-bottom: 5px;
+
+
+.instructions li::before {
+  content: '👉';
+  margin-right: 10px;
+  color: #ffd700;
+}
+
+.golden-food {
+    background-color: gold;
+    grid-area: auto;
+    border-radius: 50%;
+}
+
