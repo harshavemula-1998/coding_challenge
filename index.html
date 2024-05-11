@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Snake Game</title> <!-- Updated title -->
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="wrapper">
+    <h1 class="title">Snake Game</h1> <!-- Title with the "title" class -->
+    <div class="game-details">
+      
+      <span class="score"> 🍎 Score: 0</span>
+      <span class="high-score"> ⭐ High Score: 0</span>
+    </div>
+    <div class="play-board"></div>
+
+    <!-- Game Over container -->
+    <div id="game-over-container" class="game-over-container">
+      <p class="game-over-text">Game Over!</p>
+      <button id="restart-button" class="restart-button">Restart Game</button>
+    </div>
+
+    <!-- Instructions -->
+    <div class="instructions">
+      <ul>
+        <li>Use arrow keys to control the snake.</li>
+        <li>Eat apples to grow and score points.</li>
+        <li>Avoid colliding with Mazes,Walls and yourself.</li>
+        <li>Eat Golden Apples to get 5 extra points.</li>
+      </ul>
+    </div>
+
+    <div class="controls">
+      <i data-key="ArrowLeft" class="fa-solid fa-arrow-left-long"></i>
+      <i data-key="ArrowUp" class="fa-solid fa-arrow-up-long"></i>
+      <i data-key="ArrowRight" class="fa-solid fa-arrow-right-long"></i>
+      <i data-key="ArrowDown" class="fa-solid fa-arrow-down-long"></i>
+    </div>
+  </div>
+
+</body>
+</html>
