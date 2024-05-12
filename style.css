@@ -70,6 +70,7 @@ body {
 
 .play-board .gold {
   background: gold;
+  border-radius: 50%;
 }
 
 .controls {
