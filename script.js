@@ -107,9 +107,19 @@ const renderGame = () => {
     });
     playBoard.innerHTML = html;
 };
+const updateHighScore = () => {
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("high-score", highScore); // Update the local storage
+        highScoreElement.innerText = `High Score: ${highScore}`; // Update the high score display
+    }
+};
 
 const initGame = () => {
-    if(gameOver) return handleGameOver();
+    if(gameOver) {
+        updateHighScore(); // Check and update high score before showing game over
+        return handleGameOver();
+    }
 
     // Move the snake
     snakeX += velocityX;
@@ -128,6 +138,7 @@ const initGame = () => {
     if (isGoldenFoodPresent && snakeX === goldenFoodX && snakeY === goldenFoodY) {
         snakeBody.unshift([snakeX, snakeY]); // Grow the snake
         score += 5; // Increase score for golden food
+        updateHighScore(); // Check if we need to update the high score
         isGoldenFoodPresent = false;
         foodEatenCount = 0; // Reset food eaten count after golden food is eaten
         updateFoodPosition(); // Update the position of regular food
@@ -135,6 +146,7 @@ const initGame = () => {
     } else if (snakeX === foodX && snakeY === foodY) {
         snakeBody.unshift([snakeX, snakeY]); // Grow the snake
         score++; // Increment score for regular food
+        updateHighScore(); // Check if we need to update the high score
         foodEatenCount++; // This is crucial for counting regular foods eaten
         updateFoodPosition(); // Update the position of food, possibly placing golden food
         scoreElement.innerText = `Score: ${score}`;
@@ -145,6 +157,8 @@ const initGame = () => {
 
     renderGame();
 };
+
+
 
 setIntervalId = setInterval(initGame, 100);
 document.addEventListener("keyup", changeDirection);
