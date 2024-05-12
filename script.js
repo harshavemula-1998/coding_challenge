@@ -16,26 +16,15 @@ let score = 0;
 let foodEatenCount = 0; // Counter to track normal food eaten
 let goldenFoodEatenCount = 0; // Initialize golden food counter
 
-// Define obstacles
-let obstacles = [
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 },
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 },
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 },
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 },
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 },
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
-    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }  
-];
+const obstacles = [];
+const numberOfObstacles = 16;
 
+for (let i = 0; i < numberOfObstacles; i++) {
+    obstacles.push({
+        x: Math.floor(Math.random() * 30) + 1,
+        y: Math.floor(Math.random() * 30) + 1
+    });
+}
 
 const isPositionBlocked = (x, y) => {
     return obstacles.some(obstacle => obstacle.x === x && obstacle.y === y);
