@@ -1,3 +1,4 @@
+
 const playBoard = document.querySelector(".play-board");
 const scoreElement = document.querySelector(".score");
 const highScoreElement = document.querySelector(".high-score");
@@ -119,7 +120,10 @@ const initGame = () => {
         gameOver = true;
         return;
     }
-
+    if (snakeBody.slice(1).some(segment => segment[0] === snakeX && segment[1] === snakeY)) {
+        gameOver = true;
+        return;
+    }
     // Check if the snake eats any food
     if (isGoldenFoodPresent && snakeX === goldenFoodX && snakeY === goldenFoodY) {
         snakeBody.unshift([snakeX, snakeY]); // Grow the snake
