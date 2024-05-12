@@ -18,7 +18,7 @@ let foodEatenCount = 0; // Counter to track normal food eaten
 let goldenFoodEatenCount = 0; // Initialize golden food counter
 
 const obstacles = [];
-const numberOfObstacles = 16;
+const numberOfObstacles = 8;
 
 for (let i = 0; i < numberOfObstacles; i++) {
     obstacles.push({
