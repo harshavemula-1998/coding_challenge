@@ -16,23 +16,52 @@ let score = 0;
 let foodEatenCount = 0; // Counter to track normal food eaten
 let goldenFoodEatenCount = 0; // Initialize golden food counter
 
+// Define obstacles
+let obstacles = [
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 },
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 },
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 },
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 },
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 },
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }, 
+    { x: Math.floor(Math.random() * 30) + 1, y: Math.floor(Math.random() * 30) + 1 }  
+];
+
+
+const isPositionBlocked = (x, y) => {
+    return obstacles.some(obstacle => obstacle.x === x && obstacle.y === y);
+};
+
 // Getting high score from the local storage
 let highScore = localStorage.getItem("high-score") || 0;
 highScoreElement.innerText = `High Score: ${highScore}`;
 scoreElement.innerText = `Score: ${score}`;
 
 const updateFoodPosition = () => {
-    // Place golden food every two regular foods eaten
-    if (foodEatenCount >= 5) {
-        goldenFoodX = Math.floor(Math.random() * 30) + 1;
-        goldenFoodY = Math.floor(Math.random() * 30) + 1;
-        isGoldenFoodPresent = true;
-    } else {
+    do {
         foodX = Math.floor(Math.random() * 30) + 1;
         foodY = Math.floor(Math.random() * 30) + 1;
+    } while (isPositionBlocked(foodX, foodY)); // Ensure food doesn't spawn in a blocked position
+
+    if (foodEatenCount >= 5) {
+        do {
+            goldenFoodX = Math.floor(Math.random() * 30) + 1;
+            goldenFoodY = Math.floor(Math.random() * 30) + 1;
+        } while (isPositionBlocked(goldenFoodX, goldenFoodY)); // Ensure golden food doesn't spawn in a blocked position
+        isGoldenFoodPresent = true;
     }
 };
 updateFoodPosition();
+
 const handleGameOver = () => {
     clearInterval(setIntervalId);
     gameOverContainer.style.display = 'block'; // Display the game over container
@@ -72,6 +101,22 @@ const changeDirection = e => {
 
 controls.forEach(button => button.addEventListener("click", () => changeDirection({ key: button.dataset.key })));
 
+const renderGame = () => {
+    let html = `<div class="food" style="grid-area: ${foodY} / ${foodX};"></div>`;
+    if (isGoldenFoodPresent) {
+        html += `<div class="golden-food" style="grid-area: ${goldenFoodY} / ${goldenFoodX}; background-color: gold;"></div>`;
+    }
+
+    // Render obstacles
+    obstacles.forEach(obstacle => {
+        html += `<div class="obstacle" style="grid-area: ${obstacle.y} / ${obstacle.x}; background-color: brown;"></div>`;
+    });
+
+    snakeBody.forEach(([x, y], index) => {
+        html += `<div class="${index === 0 ? 'head' : 'body'}" style="grid-area: ${y} / ${x}; background-color: ${index === 0 ? 'green' : 'darkgreen'};"></div>`;
+    });
+    playBoard.innerHTML = html;
+};
 
 const initGame = () => {
     if(gameOver) return handleGameOver();
@@ -79,6 +124,12 @@ const initGame = () => {
     // Move the snake
     snakeX += velocityX;
     snakeY += velocityY;
+
+    // Check collisions
+    if (isPositionBlocked(snakeX, snakeY) || snakeX <= 0 || snakeX > 30 || snakeY <= 0 || snakeY > 30) {
+        gameOver = true;
+        return;
+    }
 
     // Check if the snake eats any food
     if (isGoldenFoodPresent && snakeX === goldenFoodX && snakeY === goldenFoodY) {
@@ -99,20 +150,7 @@ const initGame = () => {
         snakeBody.pop();
     }
 
-    let html = `<div class="food" style="grid-area: ${foodY} / ${foodX};"></div>`;
-    if (isGoldenFoodPresent) {
-        html += `<div class="golden-food" style="grid-area: ${goldenFoodY} / ${goldenFoodX}; background-color: gold;"></div>`;
-    }
-    snakeBody.forEach(([x, y], index) => {
-        html += `<div class="${index === 0 ? 'head' : 'body'}" style="grid-area: ${y} / ${x}; background-color: ${index === 0 ? 'green' : 'darkgreen'};"></div>`;
-    });
-    playBoard.innerHTML = html;
-
-    // Check for wall collisions
-    if (snakeX <= 0 || snakeX > 30 || snakeY <= 0 || snakeY > 30) {
-        gameOver = true;
-        return;
-    }
+    renderGame();
 };
 
 setIntervalId = setInterval(initGame, 100);
